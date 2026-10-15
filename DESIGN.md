@@ -1,4 +1,4 @@
-# Reusable GitHub Actions workflow library
+# Reusable GitHub Actions Workflow library
 
 This repository centralises the common build, container publishing, and Helm deployment steps. Consumer repositories call the workflows from their own workflow files; the caller owns the event trigger and supplies repository-specific inputs and secrets.
 
