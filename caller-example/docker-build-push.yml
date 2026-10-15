@@ -1,0 +1,19 @@
+name: Build and push Docker image
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  docker:
+    permissions:
+      contents: read
+      packages: write
+    uses: YOUR-ORG/reusable-github-actions-workflows/.github/workflows/docker-build-push.yml@v1
+    with:
+      registry: ghcr.io
+      image-name: YOUR-ORG/YOUR-REPOSITORY
+    secrets:
+      registry-username: ${{ github.actor }}
+      registry-password: ${{ secrets.GITHUB_TOKEN }}

@@ -1,0 +1,13 @@
+name: Build and test
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    uses: YOUR-ORG/reusable-github-actions-workflows/.github/workflows/build-and-test.yml@v1
+    with:
+      node-version: '20'
+      test-command: npm test

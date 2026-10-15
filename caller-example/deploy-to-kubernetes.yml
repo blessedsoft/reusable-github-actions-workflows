@@ -1,0 +1,16 @@
+name: Deploy to Kubernetes
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    permissions:
+      contents: read
+    uses: YOUR-ORG/reusable-github-actions-workflows/.github/workflows/deploy-to-kubernetes.yml@v1
+    with:
+      chart-path: ./helm/my-app
+      namespace: my-app
+      values-file: ./helm/my-app/values-production.yaml
+    secrets:
+      kubeconfig: ${{ secrets.KUBECONFIG }}

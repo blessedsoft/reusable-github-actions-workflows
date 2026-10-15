@@ -1,0 +1,23 @@
+best title and repo name: Assignment Instructions
+
+SCENARIO: Your organisation has 15 development teams all maintaining their own copy-pasted GitHub Actions pipelines. When a security fix needs to be applied to the Docker build step, someone has to update 15 repositories manually.
+
+YOUR TASK: Design and implement a centralised reusable GitHub Actions workflow library.
+
+DELIVERABLES — submit a ZIP or GitHub repo link containing:
+
+1. reusable-workflows/ directory with 3 reusable workflow files:
+   - build-and-test.yml — runs tests on push, accepts inputs: node-version, test-command
+   - docker-build-push.yml — builds and pushes a Docker image, accepts inputs: image-name, registry
+   - deploy-to-kubernetes.yml — applies a Helm chart, accepts inputs: chart-path, namespace, values-file
+2. caller-example/ directory showing how a consuming repo calls each reusable workflow using the "uses:" syntax
+3. DESIGN.md explaining:
+   - How versioning works (how teams pin to a specific version of the shared workflow)
+   - How you would handle a breaking change without disrupting all 15 teams
+   - How secrets are passed securely from caller to reusable workflow
+
+ASSESSMENT CRITERIA:
+
+- Reusable workflow YAML is syntactically correct and uses proper inputs/outputs (40%)
+- Caller examples correctly reference the reusable workflows (20%)
+- DESIGN.md addresses versioning, breaking changes and secrets (40%)

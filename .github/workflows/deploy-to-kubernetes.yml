@@ -1,0 +1,44 @@
+name: Deploy to Kubernetes
+
+on:
+  workflow_call:
+    inputs:
+      chart-path:
+        description: Path to the Helm chart
+        required: true
+        type: string
+      namespace:
+        description: Kubernetes namespace to deploy into
+        required: true
+        type: string
+      values-file:
+        description: Path to the Helm values file
+        required: true
+        type: string
+    secrets:
+      kubeconfig:
+        description: Kubeconfig for the target cluster
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+      - name: Configure Kubernetes access
+        shell: bash
+        env:
+          KUBECONFIG_CONTENT: ${{ secrets.kubeconfig }}
+        run: |
+          kubeconfig_file="$RUNNER_TEMP/kubeconfig"
+          printf '%s' "$KUBECONFIG_CONTENT" > "$kubeconfig_file"
+          chmod 600 "$kubeconfig_file"
+          echo "KUBECONFIG=$kubeconfig_file" >> "$GITHUB_ENV"
+      - name: Deploy Helm chart
+        run: helm upgrade --install app "${{ inputs.chart-path }}" --namespace "${{ inputs.namespace }}" --create-namespace --values "${{ inputs.values-file }}"
